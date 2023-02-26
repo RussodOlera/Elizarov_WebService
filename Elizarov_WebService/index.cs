@@ -10,20 +10,11 @@ using System.Windows.Forms;
 
 namespace Elizarov_WebService
 {
-    public partial class Form1 : Form
+    public partial class index : Form
     {
-        public Form1()
+        public index()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Form f = new index();
-            //Environment.Exit(0);
-            //this.Close();
-            this.Hide();
-            f.Show();
         }
     }
 }
