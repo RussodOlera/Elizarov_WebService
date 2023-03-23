@@ -22,6 +22,7 @@ namespace Elizarov_WebService
             Form f = new index();
             //Environment.Exit(0);
             //this.Close();
+            
             this.Hide();
             f.Show();
         }
