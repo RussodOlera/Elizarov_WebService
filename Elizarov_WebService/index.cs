@@ -54,12 +54,12 @@ namespace Elizarov_WebService
 
         private void button4_Click(object sender, EventArgs e)
         {
-            openChilFormMenu(new Menu2());
+            openChilFormMenu(new Menu2());     
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            openChilFormMenu(new Menu3());
+            openChilFormMenu(new Menu3());            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -69,7 +69,8 @@ namespace Elizarov_WebService
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            Form2 f2 = new Form2();
+            f2.Show();
         }
     }
 }

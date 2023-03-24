@@ -23,6 +23,7 @@ namespace Elizarov_WebService
             APOD.init_menu1();
             label1.Visible = false;
             label2.Visible = false;
+            label5.Visible = false;
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -42,6 +43,7 @@ namespace Elizarov_WebService
                 
             label1.Visible = true;
             label2.Visible = true;
+            label5.Visible = true;
 
             string url = date.url.ToString();
             byte[] image = (new WebClient()).DownloadData(url);

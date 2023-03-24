@@ -21,12 +21,19 @@ namespace Elizarov_WebService
         public Menu3()
         {
             InitializeComponent();
+            listBox2.Visible = false;
+            listBox3.Visible = false;
+            listBox4.Visible = false;
+            label2.Visible = false;
+            label7.Visible = false;
+            label3.Visible = false;
             EPIC.init_menu1();
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
             pictureBox1.Refresh();
+            listBox1.Items.Clear();
             List<Data_EPIC> date = null;
             string mese = dateTimePicker1.Value.Month.ToString();
             string giorno = dateTimePicker1.Value.Day.ToString();
@@ -40,30 +47,35 @@ namespace Elizarov_WebService
 
             date = await EPIC.GetAlbumAsync("/EPIC/api/"+collection+"/date/"+data+"?api_key=DEMO_KEY");
 
-            for(int i=0;i<date.Count();i++)
+            if(date!=null)
             {
-                listBox1.Items.Add(date[i].image);
+                for (int i = 0; i < date.Count(); i++)
+                {
+                    listBox1.Items.Add(date[i].image);
+                    listBox2.Items.Add(date[i].caption);
+                    listBox3.Items.Add(date[i].centroid_coordinates.lat);
+                    listBox4.Items.Add(date[i].centroid_coordinates.lon);
+                }
             }
+            
             
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //https://api.nasa.gov/EPIC/archive/natural/2023/03/01/png/epic_1b_20230301001751.png?api_key=DEMO_KEY
-
-            MessageBox.Show(listBox1.SelectedItem.ToString());
             string anno = dateTimePicker1.Value.Year.ToString();
             string mese = dateTimePicker1.Value.Month.ToString();
             string giorno = dateTimePicker1.Value.Day.ToString();
+            string caption = listBox2.Items[listBox1.SelectedIndex].ToString();
+            string lat = listBox3.Items[listBox1.SelectedIndex].ToString();
+            string lon = listBox4.Items[listBox1.SelectedIndex].ToString();
             if (Convert.ToInt32(mese) < 10)
                 mese = "0" + mese;
             if (Convert.ToInt32(giorno) < 10)
                 giorno = "0" + giorno;
-            //string data = dateTimePicker1.Value.Year.ToString() + "-" + mese + "-" + giorno;
             string collection = comboBox1.Text;
             string type = comboBox2.Text;
             string url = "https://api.nasa.gov/EPIC/archive/" + collection + "/" + anno + "/" + mese + "/" + giorno + "/" + type+"/"+listBox1.SelectedItem.ToString() + "." + type + "?api_key=DEMO_KEY";
-            MessageBox.Show(url);
             byte[] image = (new WebClient()).DownloadData(url);
             Image a = ((Func<Image>)(() =>
             {
@@ -72,8 +84,14 @@ namespace Elizarov_WebService
                     return Image.FromStream(ms);
                 }
             }))();
-
+            label2.Visible = true;
+            label3.Visible = true;
+            label7.Visible = true;
             pictureBox1.Image = a;
+            richTextBox1.Text = caption;
+            label7.Text = lat;
+            label3.Text = lon;
+            label2.Text = url;
         }
     }
     public class AttitudeQuaternions

@@ -22,6 +22,7 @@ namespace Elizarov_WebService
         {
             InitializeComponent();
             Earth.init_menu1();
+            label2.Visible = false;
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -31,19 +32,20 @@ namespace Elizarov_WebService
             date = await Earth.GetAlbumAsync("planetary/earth/assets?lon=" + textBox1.Text + "&lat=" + textBox2.Text + "&date=" + data + "&dim=0.15&api_key=DEMO_KEY");
             if (date != null)
             {
+                label2.Visible = true;
                 label2.Text = date.url;
-            }
-            string url = date.url.ToString();
-            byte[] image = (new WebClient()).DownloadData(url);
-            Image a = ((Func<Image>)(() =>
-            {
-                using (var ms = new MemoryStream(image))
+                string url = date.url.ToString();
+                byte[] image = (new WebClient()).DownloadData(url);
+                Image a = ((Func<Image>)(() =>
                 {
-                    return Image.FromStream(ms);
-                }
-            }))();
-
-            pictureBox1.Image = a;
+                    using (var ms = new MemoryStream(image))
+                    {
+                        return Image.FromStream(ms);
+                    }
+                }))();
+                pictureBox1.Image = a;
+            }
+            
         
         }
     }
